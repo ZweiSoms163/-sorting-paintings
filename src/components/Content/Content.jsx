@@ -6,13 +6,6 @@ import PaginationUi from '../Pagination/PaginationUi';
 import { useSelector } from 'react-redux';
 
 const Content = ({ text }) => {
-  /*
-  Что осталось доделать: 
-  1. убрать EsLint
-  2. еще раз перепроверить адаптивность 
-  3. посмотреть,можно ли поменять иконки на react select в filters
-   */
-
   const [appState, setAppState] = useState([]);
   const author = useSelector((state) => state.layout.author);
   const location = useSelector((state) => state.layout.location);
@@ -25,37 +18,42 @@ const Content = ({ text }) => {
 
   const page = useSelector((state) => state.pagination.page);
 
+  const instance = axios.create({
+    baseURL: 'https://test-front.framework.team', // базовый URL
+  });
+
   useEffect(() => {
-    let Url = `https://test-front.framework.team/paintings?q=${text}&_limit=12`;
-
-    if (selectedAuthor.value) {
-      Url += `&authorId=${selectedAuthor.value}`; // добавляю фильтрацию при выборе автора в selcet
-    }
-    if (selectedLocation.value) {
-      Url += `&locationId=${selectedLocation.value}`; // добавляю фильтрацию при выборе Локации в selcet
-    }
-    if (setInputFrom) {
-      Url += `&created_gte=${setInputFrom}`; // добавляю фильтрацию при выборе года от в input
-    }
-    if (setInputBefore) {
-      Url += `&created_lte=${setInputBefore}`; // добавляю фильтрацию при выборе года до в input
-    }
-    if (page) {
-      Url += `&_page=${page}`; // добавляет номер страницы, который был выбран в пагинации
-    }
-    console.log(Url);
-
     const fetchData = async () => {
       try {
-        const response = await axios.get(Url);
+        const filters = [
+          { key: 'authorId', value: selectedAuthor.value },
+          { key: 'locationId', value: selectedLocation.value },
+          { key: 'created_gte', value: setInputFrom },
+          { key: 'created_lte', value: setInputBefore },
+          { key: '_page', value: page },
+        ];
+
+        let url = `https://test-front.framework.team/paintings?q=${text}&_limit=12`;
+
+        filters.forEach((filter) => {
+          if (filter.value) {
+            url += `&${filter.key}=${filter.value}`;
+          }
+        });
+        console.log(url);
+
+        const response = await instance.get(url);
         const allInfo = response.data;
+
         setAppState(allInfo);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
+
     fetchData();
-  }, [text, selectedAuthor, selectedLocation, setInputFrom, setInputBefore, page]); // зависимотси при изменении которых будет перерендер
+  }, [text, selectedAuthor, selectedLocation, setInputFrom, setInputBefore, page]);
+
   return (
     <div className="wrapper">
       <div className="content">

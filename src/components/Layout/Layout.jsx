@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { setAuthor, setLocation } from '../../store/layoutSlice';
 
 import '../../styles/layout/layout.css';
+import { Authors } from '../services/authors.services';
+import { Locations } from '../services/locations.services';
 
 const Layout = () => {
   const [text, setText] = useState(''); // состояние ввода в input
@@ -14,28 +16,25 @@ const Layout = () => {
   useEffect(() => {
     const fetchAuthorData = async () => {
       try {
-        const response = await axios.get('https://test-front.framework.team/authors');
-        const data = response.data;
+        const data = await Authors.getAuthors(); // разделил логику и вынес get запрос в сервис
         dispatch(setAuthor(data));
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchAuthorData();
   }, [dispatch]);
 
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
-        const response = await axios.get('https://test-front.framework.team/locations');
-        const data = response.data;
+        const data = await Locations.getLocations(); // разделил логику и вынес get запрос в сервис
         dispatch(setLocation(data));
       } catch (error) {
         console.log(error);
       }
     };
-
     fetchLocationData();
   }, [dispatch]);
 

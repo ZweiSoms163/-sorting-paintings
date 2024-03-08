@@ -1,4 +1,4 @@
-import { Pagination } from '@mui/material';
+import Pagination from '@mui/lab/Pagination';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '../../store/PaginationUiSlice';

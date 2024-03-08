@@ -1,21 +1,22 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Select from 'react-select';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedAuthor, setSelectedLocation } from '../../store/FiltersSlice';
 
 import '../../styles/filters/filters.css';
 import Content from '../Content/Content';
 import FiltersCreated from '../FiltersCreated/FiltersCreated';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedAuthor, setSelectedLocation } from '../../store/FiltersSlice';
 
 const Filters = ({ text, handleInput }) => {
   const dispatch = useDispatch();
   const darkTheme = useSelector((state) => state.theme.darkTheme);
-  const author = useSelector((state) => state.layout.author); // получаю из redux массив author
-  const location = useSelector((state) => state.layout.location); // получаю из redux массив location
+  const author = useSelector((state) => state.layout.author);
+  const location = useSelector((state) => state.layout.location);
 
-  const [isClearable] = useState(true); // добавление кнопки удаления в slect
-  const [isSearchable] = useState(false); // отключение поиска в slect
+  const [isClearable] = useState(true);
+  const [isSearchable] = useState(false);
+  const [inputValue, setInputValue] = useState(text);
+  const [debounceTimer, setDebounceTimer] = useState(null);
 
   const handleSelectChangeAuthor = (option) => {
     if (option) {
@@ -23,7 +24,7 @@ const Filters = ({ text, handleInput }) => {
     } else {
       dispatch(setSelectedAuthor(''));
     }
-  }; // тут проверка идет на то,чтобы не было null после удаления
+  };
 
   const handleSelectChangeLocation = (option) => {
     if (option) {
@@ -31,28 +32,39 @@ const Filters = ({ text, handleInput }) => {
     } else {
       dispatch(setSelectedLocation(''));
     }
-  }; // тут проверка идет на то,чтобы не было null после удаления
+  };
 
-  const optionsAuthor = author.map((option) => {
-    return {
-      value: option.id,
-      label: option.name,
-    };
-  });
-  const optionsLocation = location.map((data) => {
-    return {
-      value: data.id,
-      label: data.location,
-    };
-  }); // добавление массива author в options Для react select
+  const optionsAuthor = author.map((option) => ({
+    value: option.id,
+    label: option.name,
+  }));
+
+  const optionsLocation = location.map((data) => ({
+    value: data.id,
+    label: data.location,
+  }));
+
   const selectClassNamePrefix = darkTheme ? 'custom-select' : 'custom-selectLight';
+
+  const handleInputChange = (event) => {
+    const newValue = event.target.value;
+    setInputValue(newValue);
+
+    clearTimeout(debounceTimer);
+
+    const newDebounceTimer = setTimeout(() => {
+      handleInput(newValue);
+    }, 300);
+
+    setDebounceTimer(newDebounceTimer);
+  };
 
   return (
     <div className="wrapper">
       <div className="search">
         <input
-          onChange={(e) => handleInput(e.target.value)}
-          value={text}
+          onChange={handleInputChange}
+          value={inputValue}
           className={`search-input ${darkTheme ? 'dark' : 'light'}`}
           placeholder="Name"
         />

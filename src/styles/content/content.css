@@ -8,10 +8,33 @@
 
 .content-box {
   position: relative;
+  width: 360px;
+  height: 275px;
 }
 
 .content-box :hover .content-img_info {
   display: block;
+}
+
+@media screen and (max-width: 1120px) {
+  .content-box {
+    width: 300px;
+    height: 230px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content-box {
+    width: 340px;
+    height: 249px;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .content-box {
+    width: 280px;
+    height: 205px;
+  }
 }
 
 .content-img {
@@ -34,7 +57,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 376px) {
   .content-img {
     width: 280px;
     height: 205px;
@@ -52,7 +75,7 @@
   max-width: 365px;
   border-radius: 0 0 20px 20px;
   justify-content: start;
-  bottom: 4px;
+  bottom: -1px;
 }
 
 .content-name {

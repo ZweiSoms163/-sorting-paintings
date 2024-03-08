@@ -4,6 +4,9 @@
   align-items: center;
   justify-content: space-between;
 }
+.header-icon {
+  cursor: pointer;
+}
 .dark .header-icon i {
   color: white;
   cursor: pointer;
