@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/sorting-paintings/static/css/main.eb7c013d.css",
+    "main.js": "/sorting-paintings/static/js/main.45de8691.js",
+    "static/media/remixicon.svg?t=1681573354175": "/sorting-paintings/static/media/remixicon.7b85b7f8453487681fc4.svg",
+    "static/media/remixicon.eot?t=1681573354175": "/sorting-paintings/static/media/remixicon.ae7015155af44fd22375.eot",
+    "static/media/remixicon.ttf?t=1681573354175": "/sorting-paintings/static/media/remixicon.8df75b42f93ef0e1f8aa.ttf",
+    "static/media/remixicon.woff?t=1681573354175": "/sorting-paintings/static/media/remixicon.56b6495e17f23a23803a.woff",
+    "static/media/remixicon.woff2?t=1681573354175": "/sorting-paintings/static/media/remixicon.52f02e1386dd3597bc00.woff2",
+    "static/media/LightSun.svg": "/sorting-paintings/static/media/LightSun.7efac3cbec09ed1764a502709e1ae415.svg",
+    "static/media/nightSun.svg": "/sorting-paintings/static/media/nightSun.403f581a5acb220ed1371178ff780034.svg",
+    "index.html": "/sorting-paintings/index.html",
+    "main.eb7c013d.css.map": "/sorting-paintings/static/css/main.eb7c013d.css.map",
+    "main.45de8691.js.map": "/sorting-paintings/static/js/main.45de8691.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eb7c013d.css",
+    "static/js/main.45de8691.js"
+  ]
+}
